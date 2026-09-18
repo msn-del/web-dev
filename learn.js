@@ -8,6 +8,7 @@
         score.computer = 0;
         localStorage.setItem('score', JSON.stringify(score));
         console.log("Score reset. Player: 0, Computer: 0");
+        updateScoreDisplay();
       };
 //load the score from local storage if it exists and if not, initialize it to 0 for both player and computer.
 
@@ -64,10 +65,30 @@
         } else if (result === 'You lose.') {
           score.computer++;
         }
+         resultDisplay(result);
+         game(computerMove, playerMove);
+         updateScoreDisplay();
+
         localStorage.setItem('score', JSON.stringify(score));
-        console.log(`You picked ${playerMove}. Computer picked ${computerMove}. ${result}`);
-        console.log(`Score - Player: ${score.player}, Computer: ${score.computer}`);
         return result;
+      }
+//update the score display on the page.
+      function updateScoreDisplay() {
+        const scoreDisplay = document.getElementById('score-display');
+        scoreDisplay.textContent = ` Player: ${score.player} vs Computer: ${score.computer}`;
+        console.log(`Score display updated. Player: ${score.player}, Computer: ${score.computer}`);
+      }
+//display the result of the game on the page.
+      function resultDisplay(result) {
+        const resultDisplay = document.getElementById('result');
+        resultDisplay.textContent = `Result: ${result}`;
+        console.log(resultDisplay);
+      }
+//display the moves of the player and computer on the page.
+      function game(computerMove, playerMove)  {
+        const gameDisplay = document.getElementById('game');
+        gameDisplay.textContent = `You picked ${playerMove}. Computer picked ${computerMove}.`;
+        console.log(gameDisplay);
       }
 
 //pick a random move for the computer.
